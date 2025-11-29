@@ -1,36 +1,64 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+<h1 align="center">InsightHub – AI Powered Analytics Dashboard</h1>
 
-## Getting Started
+Modern data workspace built with **Next.js 14 (App Router)**, **Tailwind CSS v4**, **Prisma + PostgreSQL**, **NextAuth**, **OpenAI**, **Recharts**, **Framer Motion**, and **ShadCN-inspired components** (JavaScript only).
 
-First, run the development server:
+## ✨ Highlights
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- Role-based authentication (credentials + Google) with protected routes via middleware.
+- Drag-and-drop dashboard widgets, live chart components, activity feed, and responsive layout with dark/light modes.
+- AI insights page with CSV upload/paste, server-side parsing, OpenAI generation, and history log.
+- Data upload tooling with filters, preview grid, and server actions.
+- Rich reports workspace (line, bar, pie, heatmap), export to PDF/CSV, filters, pagination.
+- Settings & profile management, theme toggle, notifications, and API token placeholder.
+
+## 🧱 Project Structure
+
+```
+src/app
+  (auth)/auth/login & register
+  (dashboard)/dashboard, insights, upload, reports, profile, settings
+  api/auth/[...nextauth], api/insights, api/upload, api/reports
+  actions (auth, dashboard, upload, insights server actions)
+src/components
+  dashboard/*, auth, insights, upload, reports, settings, ui/*
+src/lib (auth + prisma)
+src/utils (password + ui helpers)
+prisma/schema.prisma
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🚀 Getting Started
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+```bash
+npm install
+npx prisma generate
+cp .env.example .env # create the file with env vars listed below
+npm run dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Visit `http://localhost:3000` for the marketing page or `/auth/login` to sign in.
 
-## Learn More
+## ⚙️ Environment Variables
 
-To learn more about Next.js, take a look at the following resources:
+```
+DATABASE_URL="postgresql://USER:PASSWORD@HOST:PORT/DATABASE"
+NEXTAUTH_SECRET="your-random-secret"
+NEXTAUTH_URL="http://localhost:3000"
+OPENAI_API_KEY="sk-..."
+GOOGLE_CLIENT_ID="optional"
+GOOGLE_CLIENT_SECRET="optional"
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🗄️ Database
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Prisma models: `User`, `UploadedData`, `WidgetConfig`, `ActivityLog`, `AIInsightHistory`, plus NextAuth tables. Run migrations with `npx prisma migrate dev`.
 
-## Deploy on Vercel
+## ✅ Testing checklist
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- `npm run dev` – verify landing + dashboards render.
+- Ensure PostgreSQL reachable and `DATABASE_URL` set.
+- Create user via `/auth/register`, sign in, navigate all dashboard routes.
+- Use Data Upload + AI Insights flows, validate Prisma tables populate.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 📦 Deployment
+
+Deploy to Vercel, Railway, or any Node host. Ensure Prisma migrations run and environment variables are configured. Use `npm run build && npm run start` in production.
